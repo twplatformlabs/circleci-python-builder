@@ -44,7 +44,7 @@ workflows:
           docker-cve-scan: true
           severity-threshold: low
           snyk-organization: twdps
-          bats-test: false
+          bats-test: true
           test-path: test/circleci_python_builder.bats
           entry-point: /bin/ash
           container-name: circleci-python-builder-edge
