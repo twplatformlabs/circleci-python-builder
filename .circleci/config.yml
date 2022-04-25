@@ -1,0 +1,93 @@
+---
+version: 2.1
+
+orbs:
+  executor-tools: twdps/executor-tools@0.3.0
+
+# ================================================================= global pipeline parameters
+
+parameters:
+  context:
+    description: circleci context for all jobs
+    type: string
+    default: twdps-core-labs-team
+  shell-options:
+    description: shell options for all jobs
+    type: string
+    default: secrethub run --env-file secrethub.env -- /bin/bash -eo pipefail
+
+on-push-main: &on-push-main
+  branches:
+    only: /main/
+  tags:
+    ignore: /.*/
+
+on-tag-main: &on-tag-main
+  branches:
+    ignore: /.*/
+  tags:
+    only: /.*/
+
+# ================================================================= workflows
+
+workflows:
+  version: 2
+  circleci-python-builder-pipeline:
+    jobs:
+      - executor-tools/dev-release:
+          name: dev-build
+          shell: << pipeline.parameters.shell-options >>
+          context: << pipeline.parameters.context >>
+          image: twdps/circleci-python-builder
+          tag: edge
+          cis-docker-image-scan: false
+          docker-cve-scan: true
+          severity-threshold: low
+          snyk-organization: twdps
+          bats-test: false
+          test-path: test/circleci_python_builder.bats
+          entry-point: /bin/ash
+          container-name: circleci-python-builder-edge
+          filters: *on-push-main
+
+      - executor-tools/publish:
+          name: release
+          shell: << pipeline.parameters.shell-options >>
+          context: << pipeline.parameters.context >>
+          pull-tag: edge
+          image: twdps/circleci-python-builder
+          release-tag: stable
+          filters: *on-tag-main
+
+  generate-release-notes:
+    jobs:
+      - executor-tools/release:
+          shell: << pipeline.parameters.shell-options >>
+          context: << pipeline.parameters.context >>
+          on-tag: true
+          filters: *on-tag-main
+
+  # builds nightly from .unpinned Dockerfile in order to test the latest base image and installed packages
+  circleci-python-builder-nightly-build:
+    triggers:
+      - schedule:
+          cron: "0 0 1 * *"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - executor-tools/dev-release:
+          name: nightly-build
+          shell: << pipeline.parameters.shell-options >>
+          context: << pipeline.parameters.context >>
+          image: twdps/circleci-python-builder
+          tag: nightly
+          cis-docker-image-scan: true
+          docker-cve-scan: true
+          severity-threshold: low
+          snyk-organization: twdps
+          bats-test: true
+          test-path: test/circleci_python_builder.bats
+          entry-point: /bin/ash
+          container-name: circleci-python-builder-nightly
