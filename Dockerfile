@@ -2,7 +2,7 @@ FROM twdps/circleci-base-image:alpine-3.4.0
 
 LABEL maintainers=<nic.cheneweth@thoughtworks.com>
 
-SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+#SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
@@ -29,7 +29,7 @@ RUN sudo apk add --no-cache \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo ln -s /usr/bin/python3 /usr/bin/python && \
     sudo ln -s /usr/bin/python3-config /usr/bin/python-config && \
-    sudo pip install --no-binary \
+    sudo pip install \
             setuptools==62.1.0 \
             wheel==0.37.1 \
             pylint==2.13.7 \
