@@ -39,6 +39,6 @@
 }
 
 @test "bats version" {
-  run bash -c "docker exec circleci-ipython-builder-edge bats -v"
+  run bash -c "docker exec circleci-python-builder-edge bats -v"
   [[ "${output}" =~ "1.6.0" ]]
 }
