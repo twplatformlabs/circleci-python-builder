@@ -40,7 +40,7 @@ workflows:
           context: << pipeline.parameters.context >>
           image: twdps/circleci-python-builder
           tag: edge
-          cis-docker-image-scan: false
+          cis-docker-image-scan: true
           docker-cve-scan: true
           severity-threshold: low
           snyk-organization: twdps
