@@ -2,7 +2,7 @@ FROM twdps/circleci-base-image:alpine-3.4.0
 
 LABEL maintainers=<nic.cheneweth@thoughtworks.com>
 
-#SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
@@ -43,6 +43,7 @@ RUN sudo apk add --no-cache \
     sudo -u circleci mkdir /home/circleci/.gnupg && \
     sudo -u circleci bash -c "echo 'allow-loopback-pinentry' > /home/circleci/.gnupg/gpg-agent.conf" && \
     sudo -u circleci bash -c "echo 'pinentry-mode loopback' > /home/circleci/.gnupg/gpg.conf" && \
-    chmod 700 /home/circleci/.gnupg && chmod 600 /home/circleci/.gnupg/*
+    chmod 700 /home/circleci/.gnupg && \
+    chmod 600 /home/circleci/.gnupg/*
 
 USER circleci
