@@ -11,13 +11,15 @@ RUN sudo apk add --no-cache \
              wget==1.21.2-r2 \
              gnupg==2.2.31-r1 \
              python3==3.9.7-r4 \
+             python3-dev==3.9.7-r4 \
              docker==20.10.14-r1 \
              openrc==0.44.7-r5 \
-             build-base==0.5-r2 \
-             python3-dev==3.9.7-r4 \
              nodejs==16.14.2-r0 \
              npm==8.1.3-r0 \
+             jq==1.6-r1 \
+             build-base==0.5-r2 \
              openssl-dev==1.1.1n-r0 \
+             libffi-dev==3.4.2-r1 \
              g++==10.3.1_git20211027-r0 \
              gcc==10.3.1_git20211027-r0 \
              make==4.3-r0 && \
