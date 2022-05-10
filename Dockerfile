@@ -8,6 +8,7 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # hadolint ignore=DL3004
 RUN sudo apk add --no-cache \
              curl==7.80.0-r1 \
+             libcurl==7.80.0-r1 \
              wget==1.21.2-r2 \
              gnupg==2.2.31-r1 \
              python3==3.9.7-r4 \
