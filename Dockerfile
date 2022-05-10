@@ -7,7 +7,7 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
 RUN sudo apk add --no-cache \
-             curl==7.80.0-r0 \
+             curl==7.80.0-r1 \
              wget==1.21.2-r2 \
              gnupg==2.2.31-r1 \
              python3==3.9.7-r4 \
@@ -34,6 +34,7 @@ RUN sudo apk add --no-cache \
     sudo pip install \
             setuptools==62.1.0 \
             wheel==0.37.1 \
+            pipenv==2022.4.21 \
             pylint==2.13.7 \
             pytest==7.1.2 \
             coverage==6.3.2 \
@@ -42,6 +43,8 @@ RUN sudo apk add --no-cache \
             jinja2==3.1.1 && \
     sudo npm install -g \
             bats@1.6.0 && \
+    sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
+    sudo chmod +x /usr/local/bin/cc-test-reporter && \
     sudo -u circleci mkdir /home/circleci/.gnupg && \
     sudo -u circleci bash -c "echo 'allow-loopback-pinentry' > /home/circleci/.gnupg/gpg-agent.conf" && \
     sudo -u circleci bash -c "echo 'pinentry-mode loopback' > /home/circleci/.gnupg/gpg.conf" && \

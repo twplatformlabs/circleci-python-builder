@@ -54,21 +54,6 @@ workflows:
                   secrethub inject -i secrethub.env -o $BASH_ENV
                   source $BASH_ENV
           filters: *on-push-main
-      # - executor-tools/dev-release:
-      #     name: dev-build
-      #     shell: << pipeline.parameters.shell-options >>
-      #     context: << pipeline.parameters.context >>
-      #     image: twdps/circleci-python-builder
-      #     tag: edge
-      #     cis-docker-image-scan: true
-      #     docker-cve-scan: true
-      #     severity-threshold: low
-      #     snyk-organization: twdps
-      #     bats-test: true
-      #     test-path: test/circleci_python_builder.bats
-      #     entry-point: /bin/ash
-      #     container-name: circleci-python-builder-edge
-      #     filters: *on-push-main
 
       - executor-tools/publish:
           name: release
