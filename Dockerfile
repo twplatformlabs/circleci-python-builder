@@ -2,6 +2,8 @@ FROM twdps/circleci-base-image:alpine-3.4.0
 
 LABEL maintainers=<nic.cheneweth@thoughtworks.com>
 
+ENV CONFTEST_VERSION=0.31.0
+
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
@@ -46,10 +48,13 @@ RUN sudo apk add --no-cache \
             bats@1.6.0 && \
     sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
     sudo chmod +x /usr/local/bin/cc-test-reporter && \
+    wget --quiet https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
+    tar xzf conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
+    sudo mv conftest /usr/local/bin && rm ./* && \
     sudo -u circleci mkdir /home/circleci/.gnupg && \
     sudo -u circleci bash -c "echo 'allow-loopback-pinentry' > /home/circleci/.gnupg/gpg-agent.conf" && \
     sudo -u circleci bash -c "echo 'pinentry-mode loopback' > /home/circleci/.gnupg/gpg.conf" && \
     chmod 700 /home/circleci/.gnupg && \
     chmod 600 /home/circleci/.gnupg/*
 
-USER circleci
+USER cirlceci
