@@ -57,4 +57,4 @@ RUN sudo apk add --no-cache \
     chmod 700 /home/circleci/.gnupg && \
     chmod 600 /home/circleci/.gnupg/*
 
-USER circleeci
+USER circleci
