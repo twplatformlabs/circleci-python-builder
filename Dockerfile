@@ -21,7 +21,7 @@ RUN sudo apk add --no-cache \
              npm==8.1.3-r0 \
              jq==1.6-r1 \
              build-base==0.5-r2 \
-             openssl-dev==1.1.1n-r0 \
+             openssl-dev==1.1.1o-r0 \
              libffi-dev==3.4.2-r1 \
              g++==10.3.1_git20211027-r0 \
              gcc==10.3.1_git20211027-r0 \
