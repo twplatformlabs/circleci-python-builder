@@ -12,7 +12,7 @@
 
 @test "docker health" {
   run bash -c "docker exec circleci-python-builder-edge docker version"
-  [[ "${output}" =~ "20.10.14" ]]
+  [[ "${output}" =~ "20.10.16" ]]
 }
 
 @test "gpg version" {
