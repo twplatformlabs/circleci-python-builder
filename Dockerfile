@@ -9,19 +9,19 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
 RUN sudo apk add --no-cache \
-             curl==7.80.0-r1 \
-             libcurl==7.80.0-r1 \
+             curl==7.80.0-r2 \
+             libcurl==7.80.0-r0 \
              wget==1.21.2-r2 \
              gnupg==2.2.31-r1 \
              python3==3.9.7-r4 \
              python3-dev==3.9.7-r4 \
-             docker==20.10.14-r1 \
+             docker==20.10.16-r0 \
              openrc==0.44.7-r5 \
              nodejs==16.14.2-r0 \
              npm==8.1.3-r0 \
              jq==1.6-r1 \
-             build-base==0.5-r2 \
-             openssl-dev==1.1.1o-r0 \
+             build-base==0.5-r3 \
+             openssl-dev==1.1.1p-r0 \
              libffi-dev==3.4.2-r1 \
              g++==10.3.1_git20211027-r0 \
              gcc==10.3.1_git20211027-r0 \
