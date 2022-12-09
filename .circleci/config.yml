@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  executor-tools: twdps/executor-tools@0.3.0
+  executor-tools: twdps/executor-tools@0.9.0
 
 # ================================================================= global pipeline parameters
 
@@ -14,7 +14,7 @@ parameters:
   shell-options:
     description: shell options for all jobs
     type: string
-    default: secrethub run --env-file secrethub.env -- /bin/bash -eo pipefail
+    default: op run --env-file op.env -- /bin/bash -eo pipefail
 
 on-push-main: &on-push-main
   branches:
@@ -47,12 +47,12 @@ workflows:
           bats-test: true
           test-path: test/circleci_python_builder.bats
           container-name: circleci-python-builder-edge
-          after-checkout:
-            - run:
-                name: inject environment variables
-                command: |
-                  secrethub inject -i secrethub.env -o $BASH_ENV
-                  source $BASH_ENV
+          # after-checkout:
+          #   - run:
+          #       name: inject environment variables
+          #       command: |
+          #         op inject -i op.env -o $BASH_ENV
+          #         source $BASH_ENV
           filters: *on-push-main
 
       - executor-tools/publish:
