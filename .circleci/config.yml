@@ -3,6 +3,7 @@ version: 2.1
 
 orbs:
   executor-tools: twdps/executor-tools@0.9.0
+  op: twdps/onepassword@1.0.0
 
 # ================================================================= global pipeline parameters
 
@@ -48,11 +49,8 @@ workflows:
           test-path: test/circleci_python_builder.bats
           container-name: circleci-python-builder-edge
           # after-checkout:
-          #   - run:
-          #       name: inject environment variables
-          #       command: |
-          #         op inject -i op.env -o $BASH_ENV
-          #         source $BASH_ENV
+          #   - op/env:
+          #       env-file: op.env
           filters: *on-push-main
 
       - executor-tools/publish:
