@@ -48,9 +48,9 @@ workflows:
           bats-test: true
           test-path: test/circleci_python_builder.bats
           container-name: circleci-python-builder-edge
-          # after-checkout:
-          #   - op/env:
-          #       env-file: op.env
+          after-checkout:
+            - op/env:
+                env-file: op.env
           filters: *on-push-main
 
       - executor-tools/publish:
