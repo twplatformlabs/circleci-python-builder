@@ -35,7 +35,7 @@
   [[ "${output}" =~ "{\"name\": \"coverage\", \"version\": \"6.5.0\"}" ]]
   [[ "${output}" =~ "{\"name\": \"invoke\", \"version\": \"1.7.3\"}" ]]
   [[ "${output}" =~ "{\"name\": \"requests\", \"version\": \"2.28.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"Jinja2\", \"version\": \"3.1.3\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"Jinja2\", \"version\": \"3.1.2\"}" ]]
 }
 
 @test "bats version" {
