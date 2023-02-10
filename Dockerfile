@@ -2,7 +2,7 @@ FROM twdps/circleci-base-image:alpine-4.1.0
 
 LABEL maintainers=<nic.cheneweth@thoughtworks.com>
 
-ENV CONFTEST_VERSION=0.36.0
+ENV CONFTEST_VERSION=0.39.0
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
