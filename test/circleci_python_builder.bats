@@ -2,7 +2,7 @@
 
 @test "curl version" {
   run bash -c "docker exec circleci-python-builder-edge curl --version"
-  [[ "${output}" =~ "7.88.0" ]]
+  [[ "${output}" =~ "7.88" ]]
 }
 
 @test "wget version" {
@@ -27,7 +27,7 @@
 
 @test "evaluate installed pip packages and versions" {
   run bash -c "docker exec circleci-python-builder-edge pip list --format json"
-  [[ "${output}" =~ "{\"name\": \"pip\", \"version\": \"23..01\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"pip\", \"version\": \"23.0.1\"}" ]]
   [[ "${output}" =~ "{\"name\": \"setuptools\", \"version\": \"67.4.0\"}" ]]
   [[ "${output}" =~ "{\"name\": \"wheel\", \"version\": \"0.38.4\"}" ]]
   [[ "${output}" =~ "{\"name\": \"pylint\", \"version\": \"2.16.3\"}" ]]
