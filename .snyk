@@ -3,54 +3,49 @@ version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
 
-  # ignore packages inside cc-test-reporter
-  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2429769:
-    - '*':
-        reason: Denial of Service (DoS)
-        expires: 2023-03-12T07:53:10.780Z
-        created: 2023-02-10T07:53:10.785Z
-  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2331920:
-    - '*':
-        reason: NULL Pointer Dereference
-        expires: 2023-03-12T07:53:35.099Z
-        created: 2023-02-10T07:53:35.103Z
-  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-3026972:
-    - '*':
-        reason: Denial of Service (DoS)
-        expires: 2023-03-12T07:54:24.250Z
-        created: 2023-02-10T07:54:24.255Z
-  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-551923:
-    - '*':
-        reason: Improper Signature Verification
-        expires: 2023-03-12T07:54:48.876Z
-        created: 2023-02-10T07:54:48.880Z
-
-  # ignore packages inside 1password
-  SNYK-GOLANG-GOLANGORGXTEXTLANGUAGE-3043869:
-    - '*':
-        reason: Improper Input Validation
-        expires: 2023-03-12T08:04:02.434Z
-        created: 2023-02-10T08:04:02.438Z
-  SNYK-GOLANG-GOLANGORGXSYSUNIX-3310442:
-    - '*':
-        reason: Incorrect Privilege Assignment
-        expires: 2023-03-12T08:07:44.439Z
-        created: 2023-02-10T08:07:44.443Z
   SNYK-GOLANG-GOLANGORGXNETHTTP2-3160322:
-    - '*':
-        reason: Denial of Service (DoS)
-        expires: 2023-03-12T08:08:12.412Z
-        created: 2023-02-10T08:08:12.416Z
+    - golang.org/x/net/http2@v0.0.0-20211112202133-69e39bad7dc2:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2429769:
+    - golang.org/x/crypto/ssh@v0.0.0-20211108221036-ceb1ce70b4fa:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOPKGINYAMLV3-2841557:
+    - gopkg.in/yaml.v3@v3.0.0-20210107192922-496545a6307b:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOPKGINYAMLV3-2952714:
+    - gopkg.in/yaml.v3@v3.0.0-20210107192922-496545a6307b:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOLANGORGXNETHTTP2-2313688:
+    - golang.org/x/net/http2@v0.0.0-20211112202133-69e39bad7dc2:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
   SNYK-GOLANG-GOLANGORGXNETHTTP2-3028257:
-    - '*':
-        reason: Denial of Service
-        expires: 2023-03-12T08:08:45.058Z
-        created: 2023-02-10T08:08:45.062Z
-
-  # ignore package from alpine base image
-  SNYK-ALPINE317-SUDO-3234763:
-    - '*':
-        reason: Improper Privilege Management
-        expires: 2023-03-12T08:18:35.823Z
-        created: 2023-02-10T08:18:35.828Z
+    - golang.org/x/net/http2@v0.0.0-20211112202133-69e39bad7dc2:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-3026972:
+    - golang.org/x/crypto/ssh@v0.0.0-20211108221036-ceb1ce70b4fa:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOLANGORGXNETHTTP2-3323837:
+    - golang.org/x/net/http2@v0.5.0:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+    - golang.org/x/net/http2@v0.0.0-20211112202133-69e39bad7dc2:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+    - golang.org/x/net/http2@v0.4.0:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOLANGORGXSYSUNIX-3310442:
+    - golang.org/x/sys/unix@v0.0.0-20220722155257-8c9f86f7a55f:
+      reasion: Incorrect Privilege Assignment
+      expires: '2023-06-01T14:26:34.404Z'
+    - golang.org/x/sys/unix@v0.0.0-20211113001501-0c823b97ae02:
+      reasion: Incorrect Privilege Assignment
+      expires: '2023-06-01T14:26:34.404Z'
 patch: {}
