@@ -1,27 +1,27 @@
-FROM twdps/circleci-base-image:alpine-4.1.0
+FROM twdps/circleci-base-image:alpine-4.4.0
 
 LABEL maintainers=<nic.cheneweth@thoughtworks.com>
 
-ENV CONFTEST_VERSION=0.36.0
+ENV CONFTEST_VERSION=0.39.2
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
 RUN sudo apk add --no-cache \
-             curl==7.86.0-r1 \
-             libcurl==7.86.0-r1 \
+             curl==7.88.1-r0 \
+             libcurl==7.88.1-r0 \
              wget==1.21.3-r2 \
              gnupg==2.2.40-r0 \
-             python3==3.10.8-r3 \
-             python3-dev==3.10.8-r3 \
-             docker==20.10.21-r1 \
+             python3==3.10.10-r0 \
+             python3-dev==3.10.10-r0 \
+             docker==20.10.21-r3 \
              openrc==0.45.2-r7 \
-             nodejs==18.12.1-r0 \
+             nodejs==18.14.2-r0 \
              npm==9.1.2-r0 \
              jq==1.6-r2 \
              build-base==0.5-r3 \
-             openssl-dev==3.0.7-r0 \
+             openssl-dev==3.0.8-r0 \
              libffi-dev==3.4.4-r0 \
              g++==12.2.1_git20220924-r4 \
              gcc==12.2.1_git20220924-r4 \
@@ -29,21 +29,22 @@ RUN sudo apk add --no-cache \
     sudo rc-update add docker boot && \
     sudo python3 -m ensurepip && \
     sudo rm -r /usr/lib/python*/ensurepip && \
-    sudo pip3 install --upgrade pip==22.3.1 && \
+    sudo pip3 install --upgrade pip==23.0.1 && \
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
-            setuptools==65.6.3 \
+            setuptools==67.4.0 \
+            pdm==2.4.7 \
             wheel==0.38.4 \
-            pipenv==2022.11.30 \
-            pylint==2.15.8 \
-            pytest==7.2.0 \
-            coverage==6.5.0 \
+            pipenv==2023.2.18 \
+            pylint==2.16.3 \
+            pytest==7.2.2 \
+            coverage==7.2.1 \
             invoke==1.7.3 \
-            requests==2.28.1 \
+            requests==2.28.2 \
             jinja2==3.1.2 && \
     sudo npm install -g \
-            bats@1.8.2 && \
+            bats@1.9.0 && \
     sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
     sudo chmod +x /usr/local/bin/cc-test-reporter && \
     wget --quiet https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
