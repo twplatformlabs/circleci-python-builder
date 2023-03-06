@@ -2,20 +2,33 @@ FROM twdps/circleci-base-image:alpine-4.4.0
 
 LABEL maintainers=<nic.cheneweth@thoughtworks.com>
 
+<<<<<<< HEAD
 ENV CONFTEST_VERSION=0.39.2
+=======
+ENV CONFTEST_VERSION=0.39.0
+>>>>>>> 5e39993bd5953f24ecf446a9a29814687373b7b1
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
 RUN sudo apk add --no-cache \
+<<<<<<< HEAD
              curl==7.88.1-r0 \
              libcurl==7.88.1-r0 \
+=======
+             curl==7.87.0-r1 \
+             libcurl==7.87.0-r1 \
+>>>>>>> 5e39993bd5953f24ecf446a9a29814687373b7b1
              wget==1.21.3-r2 \
              gnupg==2.2.40-r0 \
              python3==3.10.10-r0 \
              python3-dev==3.10.10-r0 \
+<<<<<<< HEAD
              docker==20.10.21-r3 \
+=======
+             docker==20.10.21-r2 \
+>>>>>>> 5e39993bd5953f24ecf446a9a29814687373b7b1
              openrc==0.45.2-r7 \
              nodejs==18.14.2-r0 \
              npm==9.1.2-r0 \
