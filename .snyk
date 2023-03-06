@@ -11,6 +11,9 @@ ignore:
     - golang.org/x/crypto/ssh@v0.0.0-20211108221036-ceb1ce70b4fa:
       reason: Denial of Service (DoS)
       expires: '2023-06-01T14:26:34.404Z'
+    - golang.org/x/crypto/ssh@v0.0.0-20170503145823-04eae0b62fea:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
   SNYK-GOLANG-GOPKGINYAMLV3-2841557:
     - gopkg.in/yaml.v3@v3.0.0-20210107192922-496545a6307b:
       reason: Denial of Service (DoS)
@@ -31,6 +34,9 @@ ignore:
     - golang.org/x/crypto/ssh@v0.0.0-20211108221036-ceb1ce70b4fa:
       reason: Denial of Service (DoS)
       expires: '2023-06-01T14:26:34.404Z'
+    - golang.org/x/crypto/ssh@v0.0.0-20170503145823-04eae0b62fea:
+      reason: Denial of Service (DoS)
+      expires: '2023-06-01T14:26:34.404Z'
   SNYK-GOLANG-GOLANGORGXNETHTTP2-3323837:
     - golang.org/x/net/http2@v0.5.0:
       reason: Denial of Service (DoS)
@@ -47,5 +53,13 @@ ignore:
       expires: '2023-06-01T14:26:34.404Z'
     - golang.org/x/sys/unix@v0.0.0-20211113001501-0c823b97ae02:
       reasion: Incorrect Privilege Assignment
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2331920:
+    - golang.org/x/crypto/ssh@v0.0.0-20170503145823-04eae0b62fea:
+      reasion: NULL Pointer Dereference
+      expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-551923:
+    - golang.org/x/crypto/ssh@v0.0.0-20170503145823-04eae0b62fea:
+      reason: Improper Signature Verification
       expires: '2023-06-01T14:26:34.404Z'
 patch: {}
