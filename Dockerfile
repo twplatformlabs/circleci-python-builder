@@ -36,6 +36,7 @@ RUN sudo apk add --no-cache \
             setuptools==67.4.0 \
             pdm==2.4.7 \
             wheel==0.38.4 \
+            build==0.10.0 \
             pipenv==2023.2.18 \
             pylint==2.16.3 \
             pytest==7.2.2 \
