@@ -30,6 +30,8 @@
   [[ "${output}" =~ "{\"name\": \"pip\", \"version\": \"23.0.1\"}" ]]
   [[ "${output}" =~ "{\"name\": \"setuptools\", \"version\": \"67.4.0\"}" ]]
   [[ "${output}" =~ "{\"name\": \"wheel\", \"version\": \"0.38.4\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"build\", \"version\": \"0.10.0\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"twine\", \"version\": \"4.0.2\"}" ]]
   [[ "${output}" =~ "{\"name\": \"pylint\", \"version\": \"2.16.3\"}" ]]
   [[ "${output}" =~ "{\"name\": \"pytest\", \"version\": \"7.2.2\"}" ]]
   [[ "${output}" =~ "{\"name\": \"coverage\", \"version\": \"7.2.1\"}" ]]
