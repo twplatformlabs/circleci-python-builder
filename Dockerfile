@@ -34,11 +34,11 @@ RUN sudo apk add --no-cache \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
             setuptools==67.4.0 \
+            setuptools_scm==7.1.0 \
             pdm==2.4.7 \
             wheel==0.38.4 \
             build==0.10.0 \
             pipenv==2023.2.18 \
-            versioneer==0.28 \
             pylint==2.16.3 \
             pytest==7.2.2 \
             coverage==7.2.1 \
