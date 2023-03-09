@@ -46,3 +46,8 @@
   run bash -c "docker exec circleci-python-builder-edge bats -v"
   [[ "${output}" =~ "1.9.0" ]]
 }
+
+@test "snyk version" {
+  run bash -c "docker exec circleci-python-builder-edge snyk version"
+  [[ "${output}" =~ "1.1115.0" ]]
+}

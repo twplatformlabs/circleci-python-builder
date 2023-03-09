@@ -48,7 +48,8 @@ RUN sudo apk add --no-cache \
             requests==2.28.2 \
             jinja2==3.1.2 && \
     sudo npm install -g \
-            bats@1.9.0 && \
+             snyk@1.1115.0 \
+             bats@1.9.0 && \
     sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
     sudo chmod +x /usr/local/bin/cc-test-reporter && \
     wget --quiet https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
