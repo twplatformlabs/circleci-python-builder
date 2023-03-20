@@ -1,6 +1,11 @@
-FROM twdps/circleci-base-image:alpine-4.4.0
+FROM ghcr.io/thoughtworks-dps/twdps/circleci-base-image:alpine-5.0.0
 
-LABEL maintainers=<nic.cheneweth@thoughtworks.com>
+LABEL org.opencontainers.image.authors="nic.cheneweth@thoughtworks.com" \
+      org.opencontainers.image.description="Alpine-based CircleCI executor image" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.source="https://github.com/ThoughtWorks-DPS/circleci-python-builder" \
+      org.opencontainers.image.title="circleci-python-builder" \
+      org.opencontainers.image.vendor="ThoughtWorks, Inc."
 
 ENV CONFTEST_VERSION=0.39.2
 
@@ -8,7 +13,8 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
-RUN sudo apk add --no-cache \
+RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories" && \
+    sudo apk add --no-cache \
              curl==7.88.1-r0 \
              libcurl==7.88.1-r0 \
              wget==1.21.3-r2 \
@@ -26,27 +32,26 @@ RUN sudo apk add --no-cache \
              g++==12.2.1_git20220924-r4 \
              gcc==12.2.1_git20220924-r4 \
              make==4.3-r1 && \
-    sudo rc-update add docker boot && \
     sudo python3 -m ensurepip && \
     sudo rm -r /usr/lib/python*/ensurepip && \
     sudo pip3 install --upgrade pip==23.0.1 && \
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
-            setuptools==67.4.0 \
-            setuptools_scm==7.1.0 \
-            moto==4.1.4 \
-            wheel==0.38.4 \
-            build==0.10.0 \
-            twine==4.0.2 \
-            pipenv==2023.2.18 \
-            pylint==2.16.3 \
-            pytest==7.2.2 \
-            pytest-cov==4.0.0 \
-            coverage==7.2.1 \
-            invoke==1.7.3 \
-            requests==2.28.2 \
-            jinja2==3.1.2 && \
+         awscli==1.27.94 \
+         setuptools_scm==7.1.0 \
+         moto==4.1.4 \
+         wheel==0.38.4 \
+         build==0.10.0 \
+         twine==4.0.2 \
+         pipenv==2023.2.18 \
+         pylint==2.16.3 \
+         pytest==7.2.2 \
+         pytest-cov==4.0.0 \
+         coverage==7.2.1 \
+         invoke==1.7.3 \
+         requests==2.28.2 \
+         jinja2==3.1.2 && \
     sudo npm install -g \
              snyk@1.1115.0 \
              bats@1.9.0 && \

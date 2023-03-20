@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  executor-tools: twdps/executor-tools@0.10.0
+  executor-tools: twdps/executor-tools@1.1.0
   op: twdps/onepassword@1.0.0
 
 # ================================================================= global pipeline parameters
@@ -16,6 +16,10 @@ parameters:
     description: shell options for all jobs
     type: string
     default: op run --env-file op.env -- /bin/bash -eo pipefail
+  registry:
+    description: publish to this registry
+    type: string
+    default: ghcr.io/thoughtworks-dps
 
 on-push-main: &on-push-main
   branches:
@@ -38,6 +42,7 @@ workflows:
       - executor-tools/machine-executor-dev-release:
           name: dev-build
           context: << pipeline.parameters.context >>
+          registry: << pipeline.parameters.registry >>
           image: twdps/circleci-python-builder
           tag: edge
           docker-cve-scan: true
@@ -57,9 +62,17 @@ workflows:
           name: release
           shell: << pipeline.parameters.shell-options >>
           context: << pipeline.parameters.context >>
+          registry: << pipeline.parameters.registry >>
           pull-tag: edge
           image: twdps/circleci-python-builder
           release-tag: stable
+          sign-image: true
+          after-publish:
+            - run:
+                name: setup cosign keys
+                command: |
+                  op inject -i cosign.key.env -o cosign.key
+                  op inject -i cosign.pub.env -o cosign.pub
           filters: *on-tag-main
 
   generate-release-notes:
@@ -84,6 +97,7 @@ workflows:
           name: nightly-build
           shell: << pipeline.parameters.shell-options >>
           context: << pipeline.parameters.context >>
+          registry: << pipeline.parameters.registry >>
           image: twdps/circleci-python-builder
           tag: nightly
           cis-docker-image-scan: true
