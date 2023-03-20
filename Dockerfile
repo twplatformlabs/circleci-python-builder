@@ -38,6 +38,7 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
+         setuptools==67.4.0 \
          awscli==1.27.94 \
          setuptools_scm==7.1.0 \
          moto==4.1.4 \
