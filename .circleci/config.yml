@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  executor-tools: twdps/executor-tools@1.1.0
+  executor-tools: twdps/executor-tools@1.3.0
   op: twdps/onepassword@1.0.0
 
 # ================================================================= global pipeline parameters
@@ -19,7 +19,7 @@ parameters:
   registry:
     description: publish to this registry
     type: string
-    default: ghcr.io/thoughtworks-dps
+    default: docker.io
 
 on-push-main: &on-push-main
   branches:
@@ -56,6 +56,12 @@ workflows:
           after-checkout:
             - op/env:
                 env-file: op.env
+          before-build:
+            - run:
+                name: update CREATED and VERSION in LABELS
+                command: |
+                  sed -i "s/CREATED/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Dockerfile
+                  sed -i "s/VERSION/${CIRCLE_SHA1}/g" Dockerfile
           filters: *on-push-main
 
       - executor-tools/publish:
@@ -67,6 +73,7 @@ workflows:
           image: twdps/circleci-python-builder
           release-tag: stable
           sign-image: true
+          sbom: true
           after-publish:
             - run:
                 name: setup cosign keys
@@ -83,8 +90,8 @@ workflows:
           on-tag: true
           filters: *on-tag-main
 
-  # builds nightly from .unpinned Dockerfile in order to test the latest base image and installed packages
-  circleci-python-builder-nightly-build:
+  # builds monthly to confirm base image version health
+  circleci-python-builder-recurring-build:
     triggers:
       - schedule:
           cron: "0 0 1 * *"
@@ -108,3 +115,12 @@ workflows:
           test-path: test/circleci_python_builder.bats
           entry-point: /bin/ash
           container-name: circleci-python-builder-nightly
+          after-checkout:
+            - op/env:
+                env-file: op.env
+          before-build:
+            - run:
+                name: update CREATED and VERSION in LABELS
+                command: |
+                  sed -i "s/CREATED/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Dockerfile
+                  sed -i "s/VERSION/${CIRCLE_SHA1}/g" Dockerfile
