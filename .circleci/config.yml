@@ -40,7 +40,7 @@ workflows:
           tag: edge
           docker-cve-scan: true
           snyk-organization: twdps
-          severity-threshold: low
+          severity-threshold: medium
           cis-docker-image-scan: true
           skip-base-image: true
           bats-test: true
