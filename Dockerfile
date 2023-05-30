@@ -1,4 +1,4 @@
-FROM twdps/circleci-base-image:alpine-6.1.0
+FROM twdps/circleci-base-image:alpine-6.6.2
 
 LABEL org.opencontainers.image.authors="nic.cheneweth@thoughtworks.com" \
       org.opencontainers.image.description="Alpine-based CircleCI executor image" \
@@ -26,30 +26,30 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # hadolint ignore=DL3004
 RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories" && \
     sudo apk add --no-cache \
-             libcurl==8.0.1-r0 \
-             python3==3.11.3-r10 \
-             python3-dev==3.11.3-r10 \
-             docker==20.10.24-r1 \
-             openrc==0.45.2-r7 \
-             nodejs==18.14.2-r0 \
-             npm==9.1.2-r0 \
-             jq==1.6-r2 \
+             libcurl==8.1.1-r1 \
+             python3==3.11.3-r11 \
+             python3-dev==3.11.3-r11 \
+             docker==23.0.6-r2 \
+             openrc==0.47.1-r0 \
+             nodejs==18.16.0-r1 \
+             npm==9.6.6-r0 \
+             jq==1.6-r3 \
              build-base==0.5-r3 \
-             openssl-dev==3.0.8-r4 \
-             libffi-dev==3.4.4-r0 \
-             g++==12.2.1_git20220924-r4 \
-             gcc==12.2.1_git20220924-r4 \
-             make==4.3-r1 && \
+             openssl-dev==3.1.0-r4 \
+             libffi-dev==3.4.4-r2 \
+             g++==12.2.1_git20220924-r10 \
+             gcc==12.2.1_git20220924-r10 \
+             make==4.4.1-r1 && \
     sudo python3 -m ensurepip && \
     sudo rm -r /usr/lib/python*/ensurepip && \
     sudo pip3 install --upgrade pip==23.1.1 && \
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
-         setuptools==67.7.2 \
-         awscli==1.27.118 \
+         setuptools==67.8.0 \
+         awscli==1.27.142 \
          setuptools_scm==7.1.0 \
-         moto==4.1.8 \
+         moto==4.1.10 \
          wheel==0.40.0 \
          build==0.10.0 \
          twine==4.0.2 \
@@ -62,7 +62,7 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
          requests==2.28.2 \
          jinja2==3.1.2 && \
     sudo npm install -g \
-             snyk@1.1144.0 \
+             snyk@1.1168.0 \
              bats@1.9.0 && \
     sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
     sudo chmod +x /usr/local/bin/cc-test-reporter && \

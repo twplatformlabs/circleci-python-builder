@@ -2,24 +2,16 @@
 version: 2.1
 
 orbs:
-  executor-tools: twdps/executor-tools@1.3.0
+  executor-tools: twdps/executor-tools@1.8.0
   op: twdps/onepassword@1.0.0
+  do: twdps/pipeline-events@1.0.0
 
 # ================================================================= global pipeline parameters
 
-parameters:
-  context:
-    description: circleci context for all jobs
-    type: string
-    default: twdps-core-labs-team
-  shell-options:
-    description: shell options for all jobs
-    type: string
-    default: op run --env-file op.env -- /bin/bash -eo pipefail
-  registry:
-    description: publish to this registry
-    type: string
-    default: docker.io
+globals:
+  - &context twdps-core-labs-team
+  - &shell op run --env-file op.env -- /bin/bash -eo pipefail
+  - &registry docker.io
 
 on-push-main: &on-push-main
   branches:
@@ -37,12 +29,13 @@ on-tag-main: &on-tag-main
 
 workflows:
   version: 2
-  circleci-python-builder-pipeline:
+
+  alpine image build:
     jobs:
       - executor-tools/machine-executor-dev-release:
-          name: dev-build
-          context: << pipeline.parameters.context >>
-          registry: << pipeline.parameters.registry >>
+          name: alpine image build
+          context: *context
+          registry: *registry
           image: twdps/circleci-python-builder
           tag: edge
           docker-cve-scan: true
@@ -64,11 +57,13 @@ workflows:
                   sed -i "s/VERSION/${CIRCLE_SHA1}/g" Dockerfile
           filters: *on-push-main
 
+  release version:
+    jobs:
       - executor-tools/publish:
           name: release
-          shell: << pipeline.parameters.shell-options >>
-          context: << pipeline.parameters.context >>
-          registry: << pipeline.parameters.registry >>
+          shell: *shell
+          context: *context
+          registry: *registry
           pull-tag: edge
           image: twdps/circleci-python-builder
           release-tag: stable
@@ -82,45 +77,23 @@ workflows:
                   op inject -i cosign.pub.env -o cosign.pub
           filters: *on-tag-main
 
-  generate-release-notes:
+  release-events:
     jobs:
-      - executor-tools/release:
-          shell: << pipeline.parameters.shell-options >>
-          context: << pipeline.parameters.context >>
-          on-tag: true
+      - do/schedule-pipeline:
+          name: configure weekly trigger
+          shell: *shell
+          context: *context
+          scheduled-pipeline-name: weekly-ci-build
+          scheduled-pipeline-description: |
+            Automatically trigger image build on a weekly schedule. Failure of
+            this recurring build indicates new releases of dependent packages.
+          hours-of-day: "[1]"
+          days-of-week: "[\"SUN\"]"
           filters: *on-tag-main
 
-  # builds monthly to confirm base image version health
-  circleci-python-builder-recurring-build:
-    triggers:
-      - schedule:
-          cron: "0 0 1 * *"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - executor-tools/dev-release:
-          name: nightly-build
-          shell: << pipeline.parameters.shell-options >>
-          context: << pipeline.parameters.context >>
-          registry: << pipeline.parameters.registry >>
-          image: twdps/circleci-python-builder
-          tag: nightly
-          cis-docker-image-scan: true
-          docker-cve-scan: true
-          severity-threshold: low
-          snyk-organization: twdps
-          bats-test: true
-          test-path: test/circleci_python_builder.bats
-          entry-point: /bin/ash
-          container-name: circleci-python-builder-nightly
-          after-checkout:
-            - op/env:
-                env-file: op.env
-          before-build:
-            - run:
-                name: update CREATED and VERSION in LABELS
-                command: |
-                  sed -i "s/CREATED/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Dockerfile
-                  sed -i "s/VERSION/${CIRCLE_SHA1}/g" Dockerfile
+      - do/release:
+          name: generate release notes
+          shell: *shell
+          context: *context
+          on-tag: true
+          filters: *on-tag-main
