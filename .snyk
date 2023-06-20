@@ -73,5 +73,9 @@ ignore:
     - golang.org/x/net/http2/hpack@v0.0.0-20211112202133-69e39bad7dc2:
       reason: Denial of Service (DoS)
       expires: '2023-06-01T14:26:34.404Z'
+  SNYK-GOLANG-GITHUBCOMSNOWFLAKEDBGOSNOWFLAKE-5673232:
+    - "*":
+      reason: Arbitrary Command Injection, however images runs as ephemeral executor-tools/machine-executor-dev-release
+      expores: '2023-10-01T14:26:34.404Z'
 
 patch: {}
