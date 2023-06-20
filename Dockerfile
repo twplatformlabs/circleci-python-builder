@@ -27,15 +27,15 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories" && \
     sudo apk add --no-cache \
              libcurl==8.1.1-r1 \
-             python3==3.11.3-r11 \
-             python3-dev==3.11.3-r11 \
+             python3==3.11.4-r0 \
+             python3-dev==3.11.4-r0 \
              docker==23.0.6-r2 \
              openrc==0.47.1-r0 \
              nodejs==18.16.0-r1 \
              npm==9.6.6-r0 \
              jq==1.6-r3 \
              build-base==0.5-r3 \
-             openssl-dev==3.1.0-r4 \
+             openssl-dev==3.1.1-r1 \
              libffi-dev==3.4.4-r2 \
              g++==12.2.1_git20220924-r10 \
              gcc==12.2.1_git20220924-r10 \
