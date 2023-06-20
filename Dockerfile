@@ -49,6 +49,7 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
          setuptools==67.8.0 \
          awscli==1.27.142 \
          setuptools_scm==7.1.0 \
+         hatch==1.7.0 \
          moto==4.1.10 \
          wheel==0.40.0 \
          build==0.10.0 \
