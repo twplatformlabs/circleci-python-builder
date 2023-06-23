@@ -1,12 +1,5 @@
 FROM twdps/circleci-base-image:alpine-6.6.2
 
-LABEL org.opencontainers.image.authors="nic.cheneweth@thoughtworks.com" \
-      org.opencontainers.image.description="Alpine-based CircleCI executor image" \
-      org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.source="https://github.com/ThoughtWorks-DPS/circleci-python-builder" \
-      org.opencontainers.image.title="circleci-python-builder" \
-      org.opencontainers.image.vendor="ThoughtWorks, Inc."
-
 LABEL org.opencontainers.image.title="circleci-python-builder" \
       org.opencontainers.image.description="Alpine-based CircleCI executor image" \
       org.opencontainers.image.documentation="https://github.com/ThoughtWorks-DPS/circleci-python-builder" \
@@ -18,7 +11,7 @@ LABEL org.opencontainers.image.title="circleci-python-builder" \
       org.opencontainers.image.created="CREATED" \
       org.opencontainers.image.version="VERSION"
 
-ENV CONFTEST_VERSION=0.41.0
+ENV CONFTEST_VERSION=0.43.1
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
@@ -46,24 +39,24 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
-         setuptools==67.8.0 \
-         awscli==1.27.142 \
+         setuptools==68.0.0 \
+         awscli==1.27.159 \
          setuptools_scm==7.1.0 \
          hatch==1.7.0 \
-         moto==4.1.10 \
+         moto==4.1.11 \
          wheel==0.40.0 \
          build==0.10.0 \
          twine==4.0.2 \
-         pipenv==2023.4.20 \
-         pylint==2.17.3 \
-         pytest==7.3.1 \
-         pytest-cov==4.0.0 \
-         coverage==7.2.3 \
+         pipenv==2023.6.18 \
+         pylint==2.17.4 \
+         pytest==7.4.0 \
+         pytest-cov==4.1.0 \
+         coverage==7.2.7 \
          invoke==1.7.3 \
          requests==2.28.2 \
          jinja2==3.1.2 && \
     sudo npm install -g \
-             snyk@1.1168.0 \
+             snyk@1.1184.0 \
              bats@1.9.0 && \
     sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
     sudo chmod +x /usr/local/bin/cc-test-reporter && \
