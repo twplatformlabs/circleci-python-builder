@@ -1,4 +1,4 @@
-FROM twdps/circleci-base-image:alpine-6.6.2
+FROM twdps/circleci-base-image:alpine-6.7.0
 
 LABEL org.opencontainers.image.title="circleci-python-builder" \
       org.opencontainers.image.description="Alpine-based CircleCI executor image" \
@@ -19,12 +19,12 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # hadolint ignore=DL3004
 RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories" && \
     sudo apk add --no-cache \
-             libcurl==8.1.1-r1 \
+             libcurl==8.1.2-r0\
              python3==3.11.4-r0 \
              python3-dev==3.11.4-r0 \
              docker==23.0.6-r2 \
              openrc==0.47.1-r0 \
-             nodejs==18.16.0-r1 \
+             nodejs==18.16.1-r0 \
              npm==9.6.6-r0 \
              jq==1.6-r3 \
              build-base==0.5-r3 \
@@ -35,7 +35,7 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
              make==4.4.1-r1 && \
     sudo python3 -m ensurepip && \
     sudo rm -r /usr/lib/python*/ensurepip && \
-    sudo pip3 install --upgrade pip==23.1.1 && \
+    sudo pip3 install --upgrade pip==23.1.2 && \
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \

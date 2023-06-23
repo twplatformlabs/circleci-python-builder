@@ -12,16 +12,16 @@
 
 @test "evaluate installed pip packages and versions" {
   run bash -c "docker exec circleci-python-builder-edge pip list --format json"
-  [[ "${output}" =~ "{\"name\": \"pip\", \"version\": \"23.1.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"setuptools\", \"version\": \"67.8.0\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"pip\", \"version\": \"23.1.2\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"setuptools\", \"version\": \"68.0.0\"}" ]]
   [[ "${output}" =~ "{\"name\": \"wheel\", \"version\": \"0.40.0\"}" ]]
   [[ "${output}" =~ "{\"name\": \"build\", \"version\": \"0.10.0\"}" ]]
   [[ "${output}" =~ "{\"name\": \"twine\", \"version\": \"4.0.2\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"moto\", \"version\": \"4.1.10\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"pylint\", \"version\": \"2.17.3\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"pytest\", \"version\": \"7.3.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"pytest-cov\", \"version\": \"4.0.0\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"coverage\", \"version\": \"7.2.3\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"moto\", \"version\": \"4.1.11\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"pylint\", \"version\": \"2.17.4\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"pytest\", \"version\": \"7.4.0\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"pytest-cov\", \"version\": \"4.1.0\"}" ]]
+  [[ "${output}" =~ "{\"name\": \"coverage\", \"version\": \"7.2.7\"}" ]]
   [[ "${output}" =~ "{\"name\": \"invoke\", \"version\": \"1.7.3\"}" ]]
   [[ "${output}" =~ "{\"name\": \"requests\", \"version\": \"2.28.2\"}" ]]
   [[ "${output}" =~ "{\"name\": \"Jinja2\", \"version\": \"3.1.2\"}" ]]
@@ -34,5 +34,5 @@
 
 @test "snyk version" {
   run bash -c "docker exec circleci-python-builder-edge snyk version"
-  [[ "${output}" =~ "1.1168.0" ]]
+  [[ "${output}" =~ "1.1184.0" ]]
 }
