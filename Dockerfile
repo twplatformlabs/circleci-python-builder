@@ -33,6 +33,7 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
              g++==12.2.1_git20220924-r10 \
              gcc==12.2.1_git20220924-r10 \
              make==4.4.1-r1 && \
+    sudo rc-update add docker boot && \
     sudo python3 -m ensurepip && \
     sudo rm -r /usr/lib/python*/ensurepip && \
     sudo pip3 install --upgrade pip==23.1.2 && \
