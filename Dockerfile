@@ -25,8 +25,8 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
              libcurl==8.1.2-r0\
              python3==3.11.4-r0 \
              python3-dev==3.11.4-r0 \
-             docker==23.0.6-r2 \
-             openrc==0.47.1-r0 \
+             docker==23.0.6-r3 \
+             openrc==0.48-r0 \
              nodejs==18.16.1-r0 \
              npm==9.6.6-r0 \
              jq==1.6-r3 \
