@@ -12,6 +12,9 @@ LABEL org.opencontainers.image.title="circleci-python-builder" \
       org.opencontainers.image.version="VERSION"
 
 ENV CONFTEST_VERSION=0.43.1
+ENV COSIGN_VERSION=2.1.1
+ENV SYFT_VERSION=0.85.0
+ENV ORAS_VERSION=1.0.0
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
@@ -64,6 +67,14 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
     wget --quiet https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
     tar xzf conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
     sudo mv conftest /usr/local/bin && rm ./* && \
+    curl -LO https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-amd64 && \
+    chmod +x cosign-linux-amd64 && sudo mv cosign-linux-amd64 /usr/local/bin/cosign && \
+    sudo bash -c "curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin v${SYFT_VERSION}" && \
+    curl -LO "https://github.com/oras-project/oras/releases/download/v${ORAS_VERSION}/oras_${ORAS_VERSION}_linux_amd64.tar.gz" && \
+    mkdir -p oras-install && \
+    tar -zxf oras_${ORAS_VERSION}_*.tar.gz -C oras-install/ && \
+    sudo mv oras-install/oras /usr/local/bin/ && \
+    rm -rf oras_${ORAS_VERSION}_*.tar.gz oras-install/ && \
     sudo -u circleci mkdir /home/circleci/.gnupg && \
     sudo -u circleci bash -c "echo 'allow-loopback-pinentry' > /home/circleci/.gnupg/gpg-agent.conf" && \
     sudo -u circleci bash -c "echo 'pinentry-mode loopback' > /home/circleci/.gnupg/gpg.conf" && \

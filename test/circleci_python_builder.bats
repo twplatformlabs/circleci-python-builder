@@ -36,3 +36,18 @@
   run bash -c "docker exec circleci-python-builder-edge snyk version"
   [[ "${output}" =~ "1.1184.0" ]]
 }
+
+@test "cosign version" {
+  run bash -c "docker exec circleci-python-builder-edge cosign version"
+  [[ "${output}" =~ "2.1" ]]
+}
+
+@test "syft version" {
+  run bash -c "docker exec circleci-python-builder-edge syft version"
+  [[ "${output}" =~ "0.85" ]]
+}
+
+@test "oras version" {
+  run bash -c "docker exec circleci-python-builder-edge oras version"
+  [[ "${output}" =~ "1.0" ]]
+}
