@@ -1,4 +1,4 @@
-FROM twdps/circleci-base-image:alpine-6.7.0
+FROM twdps/circleci-base-image:alpine-6.11.0
 
 LABEL org.opencontainers.image.title="circleci-python-builder" \
       org.opencontainers.image.description="Alpine-based CircleCI executor image" \
@@ -11,27 +11,26 @@ LABEL org.opencontainers.image.title="circleci-python-builder" \
       org.opencontainers.image.created="CREATED" \
       org.opencontainers.image.version="VERSION"
 
-ENV CONFTEST_VERSION=0.43.1
+ENV CONFTEST_VERSION=0.46.0
 ENV COSIGN_VERSION=2.1.1
-ENV SYFT_VERSION=0.85.0
+ENV SYFT_VERSION=0.93.0
 ENV ORAS_VERSION=1.0.0
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
 # hadolint ignore=DL3004
-RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories" && \
-    sudo apk add --no-cache \
-             libcurl==8.1.2-r0\
-             python3==3.11.4-r0 \
-             python3-dev==3.11.4-r0 \
-             docker==23.0.6-r3 \
+RUN sudo apk add --no-cache \
+             libcurl==8.4.0-r0 \
+             python3==3.11.6-r0 \
+             python3-dev==3.11.6-r0 \
+             docker==23.0.6-r5 \
              openrc==0.48-r0 \
-             nodejs==18.16.1-r0 \
+             nodejs-current==20.5.0-r0 \
              npm==9.6.6-r0 \
              jq==1.6-r3 \
              build-base==0.5-r3 \
-             openssl-dev==3.1.1-r1 \
+             openssl-dev==3.1.3-r0 \
              libffi-dev==3.4.4-r2 \
              g++==12.2.1_git20220924-r10 \
              gcc==12.2.1_git20220924-r10 \
@@ -39,29 +38,29 @@ RUN sudo bash -c "echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/
     sudo rc-update add docker boot && \
     sudo python3 -m ensurepip && \
     sudo rm -r /usr/lib/python*/ensurepip && \
-    sudo pip3 install --upgrade pip==23.1.2 && \
+    sudo pip3 install --upgrade pip==23.2.1 && \
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
-         setuptools==68.0.0 \
-         awscli==1.27.159 \
-         setuptools_scm==7.1.0 \
+         setuptools==68.2.2 \
+         awscli==1.29.62 \
+         setuptools_scm==8.0.4 \
          hatch==1.7.0 \
-         moto==4.1.11 \
-         wheel==0.40.0 \
-         build==0.10.0 \
+         moto==4.2.5 \
+         wheel==0.41.2 \
+         build==1.0.3 \
          twine==4.0.2 \
-         pipenv==2023.6.18 \
-         pylint==2.17.4 \
-         pytest==7.4.0 \
+         pipenv==2023.10.3 \
+         pylint==3.0.1 \
+         pytest==7.4.2 \
          pytest-cov==4.1.0 \
-         coverage==7.2.7 \
-         invoke==1.7.3 \
-         requests==2.28.2 \
+         coverage==7.3.2 \
+         invoke==2.2.0 \
+         requests==2.31.0 \
          jinja2==3.1.2 && \
     sudo npm install -g \
-             snyk@1.1184.0 \
-             bats@1.9.0 && \
+             snyk@1.1233.0 \
+             bats@1.10.0 && \
     sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
     sudo chmod +x /usr/local/bin/cc-test-reporter && \
     curl -LO https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
