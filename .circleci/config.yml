@@ -79,6 +79,8 @@ workflows:
           name: generate release notes
           context: *context
           on-tag: true
+          before-release:
+            - op/env
           requires:
             - alpine release
           filters: *on-tag-main
