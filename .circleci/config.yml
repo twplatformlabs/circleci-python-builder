@@ -45,38 +45,16 @@ workflows:
       - executor-tools/dev-release:
           name: alpine image build
           context: *context
-          shell: *shell
-          dockerfile: Dockerfile.alpine
+          #shell: *shell
           image: twdps/circleci-python-builder
-          tag: alpine-edge
+          tag: edge
           snyk-scan: true
           snyk-severity-threshold: medium
           snyk-organization: twdps
           bats-test: true
-          bats-run-container-name: circleci-python-builder-alpine-edge
+          bats-run-container-name: circleci-python-builder-edge
           bats-entry-point: /bin/ash
-          bats-test-path: test/circleci_python_builder_alpine.bats
-          opencontainer-labels: true
-          after-checkout:
-            - op/env
-          filters: *on-push-main
-
-  slim build:
-    jobs:
-      - executor-tools/dev-release:
-          name: slim image build
-          context: *context
-          shell: *shell
-          dockerfile: Dockerfile.slim
-          image: twdps/circleci-python-builder
-          tag: slim-edge
-          snyk-scan: true
-          snyk-severity-threshold: medium
-          snyk-organization: twdps
-          bats-test: true
-          bats-run-container-name: circleci-python-builder-slim-edge
-          bats-entry-point: /bin/bash
-          bats-test-path: test/circleci_python_builder_slim.bats
+          bats-test-path: test/circleci_python_builder.bats
           opencontainer-labels: true
           after-checkout:
             - op/env
@@ -88,25 +66,9 @@ workflows:
       - executor-tools/publish:
           name: alpine release
           context: *context
-          shell: *shell
           image: twdps/circleci-python-builder
-          pull-tag: alpine-edge
-          tag-annotation: alpine-
-          release-tag: alpine-stable
-          sign-image: true
-          sbom: true
-          after-checkout:
-            - set-environment
-          filters: *on-tag-main
-
-      - executor-tools/publish:
-          name: slim release
-          context: *context
-          shell: *shell
-          image: twdps/circleci-python-builder
-          pull-tag: slim-edge
-          tag-annotation: slim-
-          release-tag: slim-stable
+          pull-tag: edge
+          release-tag: stable
           sign-image: true
           sbom: true
           after-checkout:
@@ -115,7 +77,6 @@ workflows:
 
       - do/release:
           name: generate release notes
-          shell: *shell
           context: *context
           on-tag: true
           requires:
@@ -133,13 +94,11 @@ workflows:
             - op/env
           requires:
             - alpine release
-            - slim release
 
   schedule ci build:
     jobs:
       - do/schedule-pipeline:
           name: configure weekly trigger
-          shell: *shell
           context: *context
           scheduled-pipeline-name: weekly-ci-build
           scheduled-pipeline-description: |
