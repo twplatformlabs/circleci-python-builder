@@ -81,7 +81,6 @@ workflows:
           on-tag: true
           requires:
             - alpine release
-            - slim release
           filters: *on-tag-main
 
       - do/slack:
