@@ -18,5 +18,65 @@ ignore:
     - "*":
       reason: Uncontrolled Resource Consumption ('Resource Exhaustion')
       expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2429769:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2331920:
+    - "*":
+      reason: NULL Pointer Dereference
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-3026972:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXCRYPTOSSH-551923:
+    - "*":
+      reason: Improper Signature Verification
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GITHUBCOMELAZARLGOPROXY-5783247:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXSYSUNIX-3310442:
+    - "*":
+      reason: Incorrect Privilege Assignment
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXNETHTTP2-3160322:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOPKGINYAMLV3-2841557:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOPKGINYAMLV3-2952714:
+    - "*":
+      reason: NULL Pointer Dereference
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOOGLEGOLANGORGGRPC-5953328:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXNETHTTP2HPACK-3358253:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXNETHTTP2-2313688:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXNETHTTP2-3028257:
+    - "*":
+      reason: Denial of Service
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXNETHTTP2-3323837:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
+  SNYK-GOLANG-GOLANGORGXNETHTTP2-5953327:
+    - "*":
+      reason: Denial of Service (DoS)
+      expires: 2024-04-01T14:26:34.404Z
 
 patch: {}
