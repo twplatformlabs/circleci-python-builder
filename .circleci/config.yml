@@ -105,4 +105,6 @@ workflows:
             this recurring build indicates new releases of dependent packages.
           hours-of-day: "[1]"
           days-of-week: "[\"SUN\"]"
+          before-schedule:
+            - op/dev
           filters: *on-tag-main
