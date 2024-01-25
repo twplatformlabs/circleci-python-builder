@@ -106,5 +106,5 @@ workflows:
           hours-of-day: "[1]"
           days-of-week: "[\"SUN\"]"
           before-schedule:
-            - op/dev
+            - op/env
           filters: *on-tag-main
