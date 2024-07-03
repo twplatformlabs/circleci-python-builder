@@ -5,45 +5,49 @@ ignore:
   SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2429769:
     - "*":
       reason: Denial of Service (DoS)
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GOLANGORGXCRYPTOSSH-6130669:
     - "*":
       reason: Authentication Bypass by Capture-replay
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GOLANGORGXCRYPTOSSH-2331920:
     - "*":
       reason: NULL Pointer Dereference
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GOLANGORGXCRYPTOSSH-3026972:
     - "*":
       reason: Denial of Service (DoS)
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GOLANGORGXCRYPTOSSH-551923:
     - "*":
       reason: Improper Signature Verification
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GITHUBCOMHASHICORPGORETRYABLEHTTP-7362036:
     - "*":
       reason: Insertion of Sensitive Information into Log File
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GITHUBCOMAZUREAZURESDKFORGOSDKAZIDENTITY-7246767:
     - "*":
       reason: Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GOLANGORGXNETHTTP2-6531285:
     - "*":
       reason: Allocation of Resources Without Limits or Throttling
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GITHUBCOMCONTAINERDCONTAINERD-6219724:
     - "*":
       reason: Container Breakout (Leaky Vessels)
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GITHUBCOMELAZARLGOPROXY-5783247:
     - "*":
       reason: Denial of Service (DoS)
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
   SNYK-GOLANG-GITHUBCOMDVSEKHVALNOVJOSE2GO-6137739:
     - "*":
       reason: Uncontrolled Resource Consumption ('Resource Exhaustion')
-      expires: 2024-04-01T14:26:34.404Z
+      expires: 2024-09-01T14:26:34.404Z
+  SNYK-GOLANG-GITHUBCOMJACKCPGXV4-7416900:
+    - "*":
+      reason: Uncaught Exception
+      expires: 2024-09-01T14:26:34.404Z
 patch: {}
