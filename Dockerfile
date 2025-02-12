@@ -53,10 +53,6 @@ RUN sudo apk add --no-cache \
              bats@1.11.1 && \
     curl -LO https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 && \
     sudo mv hadolint-Linux-x86_64 /usr/local/bin/hadolint && sudo chmod +x /usr/local/bin/hadolint && \
-    
-    sudo bash -c "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter" && \
-    sudo chmod +x /usr/local/bin/cc-test-reporter && \
-
     curl -LO https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-amd64 && \
     chmod +x cosign-linux-amd64 && sudo mv cosign-linux-amd64 /usr/local/bin/cosign && \
     sudo bash -c "curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin v${SYFT_VERSION}" && \
