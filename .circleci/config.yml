@@ -2,21 +2,19 @@
 version: 2.1
 
 orbs:
-  executor-tools: twdps/executor-tools@2.1.0
-  op: twdps/onepassword@2.0.6
-  do: twdps/pipeline-events@3.2.2
-
-# ================================================================= global pipeline parameters
+  executor-tools: twdps/executor-tools@4.0.1
+  op: twdps/onepassword@3.0.0
+  do: twdps/pipeline-events@5.0.1
 
 globals:
   - &context empc-lab
   - &shell op run --env-file op.env -- /bin/bash -eo pipefail
 
-on-push-main: &on-push-main
+on-push-main: &on-each-run
   branches:
     only: /main/
   tags:
-    ignore: /.*/
+    only: /.*/
 
 on-tag-main: &on-tag-main
   branches:
@@ -29,23 +27,21 @@ commands:
   set-environment:
     steps:
       - op/env
-      - op/write:
+      - op/write-to-file:
           op-value: empc-lab/svc-cosign-private-key/notesPlain
           out-file: cosign.key
-      - op/write:
+      - op/write-to-file:
           op-value: empc-lab/svc-cosign-public-key/notesPlain
           out-file: cosign.pub
 
-# ================================================================= workflows
-
 workflows:
 
-  alpine build:
+  build and publish:
     jobs:
       - executor-tools/dev-release:
-          name: alpine image build
+          name: image build
           context: *context
-          #shell: *shell
+          shell: *shell
           image: twdps/circleci-python-builder
           tag: edge
           snyk-scan: true
@@ -56,16 +52,15 @@ workflows:
           bats-entry-point: /bin/ash
           bats-test-path: test/circleci_python_builder.bats
           opencontainer-labels: true
+          security-scan-nofail: true
           after-checkout:
             - op/env
-          filters: *on-push-main
-
-  release version:
-    jobs:
+          filters: *on-each-run
 
       - executor-tools/publish:
-          name: alpine release
+          name: release
           context: *context
+          shell: *shell
           image: twdps/circleci-python-builder
           pull-tag: edge
           release-tag: stable
@@ -73,28 +68,23 @@ workflows:
           sbom: true
           after-checkout:
             - set-environment
+          requires:
+            - image build
           filters: *on-tag-main
 
-      - do/release:
+      - do/gh-release:
           name: generate release notes
+          shell: *shell
           context: *context
-          on-tag: true
+          notes-from-file: release.md
+          include-commit-msg: true
+          upload-artifacts: true
+          artifact-folder: workspace
           before-release:
-            - op/env
+            - set-environment
           requires:
-            - alpine release
+            - release
           filters: *on-tag-main
-
-      - do/slack:
-          context: *context
-          channel: lab-events
-          message: "New twdps/circleci-python-builder release"
-          include-tag: true
-          filters: *on-tag-main
-          before-message:
-            - op/env
-          requires:
-            - alpine release
 
   schedule ci build:
     jobs:
