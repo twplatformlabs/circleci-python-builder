@@ -37,6 +37,11 @@
   [[ "${output}" =~ "2.4" ]]
 }
 
+@test "crane version" {
+  run bash -c "docker exec circleci-python-builder-edge crane version"
+  [[ "${output}" =~ "0.20" ]]
+}
+
 @test "syft version" {
   run bash -c "docker exec circleci-python-builder-edge syft version"
   [[ "${output}" =~ "1.19" ]]

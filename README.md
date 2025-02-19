@@ -10,18 +10,18 @@
 </div>
 <br />
 
-Common tools and packages used in building python applications   
+Common tools and packages used in building python applications.   
 
 Primary packages include:  
 
 | apk      | pip        | other            |
 |----------|------------|------------------|
 | python3  | setuptools | bats             |
-| docker   | wheel      | conftest         |
-| nodejs   | pylint     | cc-test-reporter |
-|          | pytest     |                  |
-|          | coverage   |                  |
-|          | invoke     |                  |
+| docker   | wheel      | hadolint         |
+| nodejs   | pylint     | cosign           |
+|          | pytest     | crane            |
+|          | coverage   | syft             |
+|          | invoke     | oras             |
 |          | requests   |                  |
 |          | jinja2     |                  |
 
