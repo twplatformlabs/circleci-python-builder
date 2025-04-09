@@ -1,4 +1,4 @@
-FROM twdps/circleci-base-image:alpine-8.5.0
+FROM twdps/circleci-base-image:alpine-8.8.0
 
 LABEL org.opencontainers.image.created="%%CREATED%%" \
       org.opencontainers.image.authors="nic.cheneweth@thoughtworks.com" \
@@ -13,9 +13,9 @@ LABEL org.opencontainers.image.created="%%CREATED%%" \
       org.opencontainers.image.base.name="%%BASE%%"
 
 ENV HADOLINT_VERSION=2.12.0
-ENV COSIGN_VERSION=2.4.1
+ENV COSIGN_VERSION=2.5.0
 ENV CRANE_VERSION=0.20.3
-ENV SYFT_VERSION=1.19.0
+ENV SYFT_VERSION=1.22.0
 ENV ORAS_VERSION=1.2.2
 
 # sudo since twdps circleci remote docker images set the USER=cirlceci
@@ -25,7 +25,7 @@ RUN sudo apk add --no-cache \
              python3-dev==3.12.9-r0 \
              nodejs-current==23.2.0-r1 \
              npm==10.9.1-r0 \
-             libffi-dev==3.4.6-r0  && \
+             libffi-dev==3.4.7-r0  && \
     sudo rm /usr/lib/python3.12/EXTERNALLY-MANAGED && \
     sudo python3 -m ensurepip && \
     sudo rm -r /usr/lib/python*/ensurepip && \
@@ -33,24 +33,24 @@ RUN sudo apk add --no-cache \
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
-         setuptools==75.8.0 \
-         awscli==1.37.18 \
-         setuptools_scm==8.1.0 \
-         hatch==1.14.0 \
-         moto==5.0.28 \
+         setuptools==75.8.1 \
+         awscli==1.38.30 \
+         setuptools_scm==8.2.0 \
+         hatch==1.14.1 \
+         moto==5.1.3 \
          wheel==0.45.1 \
          build==1.2.1 \
          twine==6.1.0 \
          pipenv==2024.4.1 \
-         pylint==3.3.4 \
-         pytest==8.3.4 \
-         pytest-cov==6.0.0 \
-         coverage==7.6.12 \
+         pylint==3.3.6 \
+         pytest==8.3.5 \
+         pytest-cov==6.1.1 \
+         coverage==7.8.0 \
          invoke==2.2.0 \
          requests==2.32.3 \
-         jinja2==3.1.5 && \
+         jinja2==3.1.6 && \
     sudo npm install -g \
-             snyk@1.1295.3 \
+             snyk@1.1296.1 \
              bats@1.11.1 && \
     curl -LO https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 && \
     sudo mv hadolint-Linux-x86_64 /usr/local/bin/hadolint && sudo chmod +x /usr/local/bin/hadolint && \
