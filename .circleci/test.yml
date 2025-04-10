@@ -1,0 +1,71 @@
+---
+version: 2.1
+
+orbs:
+  executor-tools: twdps/executor-tools@4.0.1
+  op: twdps/onepassword@3.0.0
+  do: twdps/pipeline-events@5.0.1
+
+globals:
+  - &context platform
+  - &shell op run --env-file op.env -- /bin/bash -eo pipefail
+  - &deploy-image twdps/circleci-kube-ops:alpine-3.5.0
+
+on-push-main: &on-push-main
+  branches:
+    only: /main/
+  tags:
+    ignore: /.*/
+
+# on-push-main: &on-each-run
+#   branches:
+#     only: /main/
+#   tags:
+#     only: /.*/
+
+# on-tag-main: &on-tag-main
+#   branches:
+#     ignore: /.*/
+#   tags:
+#     only: /.*/
+
+# commands:
+
+#   set-environment:
+#     steps:
+#       - op/env
+#       - op/write-to-file:
+#           op-value: platform/svc-cosign-private-key/notesPlain
+#           out-file: cosign.key
+#       - op/write-to-file:
+#           op-value: platform/svc-cosign-public-key/notesPlain
+#           out-file: cosign.pub
+jobs:
+
+  test-job:
+    docker:
+      - image: *deploy-image
+    steps:
+      - run:
+          name: test step
+          command: echo "test step"
+
+workflows:
+
+  test-multi-pipelines:
+    jobs:
+      - test-job
+  # schedule ci build:
+  #   jobs:
+  #     - do/schedule-pipeline:
+  #         name: configure weekly trigger
+  #         context: *context
+  #         scheduled-pipeline-name: weekly-ci-build
+  #         scheduled-pipeline-description: |
+  #           Automatically trigger image build on a weekly schedule. Failure of
+  #           this recurring build indicates new releases of dependent packages.
+  #         hours-of-day: "[1]"
+  #         days-of-week: "[\"SUN\"]"
+  #         before-schedule:
+  #           - op/env
+  #         filters: *on-tag-main
