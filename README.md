@@ -1,12 +1,10 @@
 <div align="center">
 	<p>
-		<img alt="Thoughtworks Logo" src="https://raw.githubusercontent.com/ThoughtWorks-DPS/static/master/thoughtworks_flamingo_wave.png?sanitize=true" width=200 />
-    <br />
-		<img alt="DPS Title" src="https://raw.githubusercontent.com/ThoughtWorks-DPS/static/master/EMPCPlatformStarterKitsImage.png?sanitize=true" width=350/>
+		<img alt="Thoughtworks Logo" src="https://raw.githubusercontent.com/twplatformlabs/static/master/psk_banner.png" width=800 />
 	</p>
-  <h3>PSK Convenience Images</h3>
   <h1>twdps/circleci-python-builder</h1>
-  <a href="https://app.circleci.com/pipelines/github/ThoughtWorks-DPS/circleci-python-builder"><img src="https://circleci.com/gh/ThoughtWorks-DPS/circleci-python-builder.svg?style=shield"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/ThoughtWorks-DPS/circleci-python-builder"></a>
+  <h3>PSK CircleCI Convenience Images</h3>
+  <a href="https://app.circleci.com/pipelines/github/twplatformlabs/circleci-python-builder"><img src="https://circleci.com/gh/twplatformlabs/circleci-python-builder.svg?style=shield"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/twplatformlabs/circleci-python-builder"></a>
 </div>
 <br />
 
