@@ -27,7 +27,7 @@
   [[ "${output}" =~ "Usage: bats" ]]
 }
 
-@test "bats installed" {
+@test "hadolint installed" {
   run bash -c "docker exec circleci-python-builder-edge bats --help"
   [[ "${output}" =~ "Usage: bats" ]]
 }
