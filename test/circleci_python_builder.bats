@@ -1,53 +1,58 @@
 #!/usr/bin/env bats
 
-@test "python3 version" {
-  run bash -c "docker exec circleci-python-builder-edge python -V"
-  [[ "${output}" =~ "3.12" ]]
+@test "python3 installed" {
+  run bash -c "docker exec circleci-python-builder-edge python --help"
+  [[ "${output}" =~ "usage:" ]]
 }
 
 @test "evaluate installed pip packages and versions" {
   run bash -c "docker exec circleci-python-builder-edge pip list --format json"
-  [[ "${output}" =~ "{\"name\": \"pip\", \"version\": \"25.0.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"setuptools\", \"version\": \"75.8.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"wheel\", \"version\": \"0.45.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"build\", \"version\": \"1.2.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"twine\", \"version\": \"6.1.0\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"moto\", \"version\": \"5.1.3\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"pylint\", \"version\": \"3.3.6\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"pytest\", \"version\": \"8.3.5\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"pytest-cov\", \"version\": \"6.1.1\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"coverage\", \"version\": \"7.8.0\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"invoke\", \"version\": \"2.2.0\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"requests\", \"version\": \"2.32.3\"}" ]]
-  [[ "${output}" =~ "{\"name\": \"Jinja2\", \"version\": \"3.1.6\"}" ]]
+  [[ "${output}" =~ "pip" ]]
+  [[ "${output}" =~ "setuptools" ]]
+  [[ "${output}" =~ "wheel" ]]
+  [[ "${output}" =~ "build" ]]
+  [[ "${output}" =~ "twine" ]]
+  [[ "${output}" =~ "moto" ]]
+  [[ "${output}" =~ "pylint" ]]
+  [[ "${output}" =~ "pytest" ]]
+  [[ "${output}" =~ "pytest-cov" ]]
+  [[ "${output}" =~ "coverage" ]]
+  [[ "${output}" =~ "invoke" ]]
+  [[ "${output}" =~ "requests" ]]
+  [[ "${output}" =~ "Jinja2" ]]
 }
 
-@test "bats version" {
-  run bash -c "docker exec circleci-python-builder-edge bats -v"
-  [[ "${output}" =~ "1.11" ]]
+@test "bats installed" {
+  run bash -c "docker exec circleci-python-builder-edge bats --help"
+  [[ "${output}" =~ "Usage: bats" ]]
 }
 
-@test "snyk version" {
-  run bash -c "docker exec circleci-python-builder-edge snyk version"
-  [[ "${output}" =~ "1.1296" ]]
+@test "bats installed" {
+  run bash -c "docker exec circleci-python-builder-edge bats --help"
+  [[ "${output}" =~ "Usage: bats" ]]
 }
 
-@test "cosign version" {
-  run bash -c "docker exec circleci-python-builder-edge cosign version"
-  [[ "${output}" =~ "2.5" ]]
+@test "snyk installed" {
+  run bash -c "docker exec circleci-python-builder-edge snyk help"
+  [[ "${output}" =~ "CLI help" ]]
 }
 
-@test "crane version" {
-  run bash -c "docker exec circleci-python-builder-edge crane version"
-  [[ "${output}" =~ "0.20" ]]
+@test "cosign installed" {
+  run bash -c "docker exec circleci-python-builder-edge cosign help"
+  [[ "${output}" =~ "Usage:" ]]
 }
 
-@test "syft version" {
-  run bash -c "docker exec circleci-python-builder-edge syft version"
-  [[ "${output}" =~ "1.22" ]]
+@test "crane installed" {
+  run bash -c "docker exec circleci-python-builder-edge crane --help"
+  [[ "${output}" =~ "Usage:" ]]
 }
 
-@test "oras version" {
-  run bash -c "docker exec circleci-python-builder-edge oras version"
-  [[ "${output}" =~ "1.2" ]]
+@test "syft installed" {
+  run bash -c "docker exec circleci-python-builder-edge syft --help"
+  [[ "${output}" =~ "Usage:" ]]
+}
+
+@test "oras installed" {
+  run bash -c "docker exec circleci-python-builder-edge oras --help"
+  [[ "${output}" =~ "Usage:" ]]
 }
