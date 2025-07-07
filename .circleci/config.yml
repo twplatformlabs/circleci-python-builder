@@ -101,8 +101,7 @@ workflows:
           before-message:
             - op/env
           requires:
-            - alpine release
-            - ubuntu release
+            - release
 
   monthly build:
     when:
