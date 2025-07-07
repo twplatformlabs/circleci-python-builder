@@ -12,8 +12,11 @@ LABEL org.opencontainers.image.created="%%CREATED%%" \
       org.opencontainers.image.description="Alpine-based CircleCI executor image for building Python APIs" \
       org.opencontainers.image.base.name="%%BASE%%"
 
-# sudo since twdps circleci remote docker images set the USER=cirlceci
-# hadolint ignore=DL3004
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
+# Configured for automatic, monthly build using current package repository release versions.
+# Pin downstream executor builds to specific OS and package versions using YYYY.MM tag.
+# hadolint ignore=DL3004,SC3057
 RUN sudo apk add --no-cache \
              python3\
              python3-dev \
