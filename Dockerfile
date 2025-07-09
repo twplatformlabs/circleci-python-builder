@@ -63,6 +63,7 @@ RUN sudo apk add --no-cache \
     rm -rf ./oras.tar.gz oras-install/ && \
     current_version=$(curl -s "https://api.github.com/repos/google/go-containerregistry/releases/latest" | jq -r '.tag_name') && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/${current_version}/go-containerregistry_Linux_x86_64.tar.gz" > go-containerregistry.tar.gz && \
-    sudo bash -c "tar -zxvf go-containerregistry.tar.gz -C /usr/local/bin/ crane"
+    sudo bash -c "tar -zxvf go-containerregistry.tar.gz -C /usr/local/bin/ crane" && \
+    rm go-containerregistry.tar.gz
 
 USER circleci
