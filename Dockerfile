@@ -1,16 +1,4 @@
-FROM twdps/circleci-base-image:alpine-stable
-
-LABEL org.opencontainers.image.created="%%CREATED%%" \
-      org.opencontainers.image.authors="nic.cheneweth@thoughtworks.com" \
-      org.opencontainers.image.documentation="https://github.com/ThoughtWorks-DPS/circleci-python-builder" \
-      org.opencontainers.image.source="https://github.com/ThoughtWorks-DPS/circleci-python-builder" \
-      org.opencontainers.image.url="https://github.com/ThoughtWorks-DPS/circleci-python-builder" \
-      org.opencontainers.image.version="%%VERSION%%" \
-      org.opencontainers.image.vendor="ThoughtWorks, Inc." \
-      org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.title="circleci-python-builder" \
-      org.opencontainers.image.description="Alpine-based CircleCI executor image for building Python APIs" \
-      org.opencontainers.image.base.name="%%BASE%%"
+FROM ghcr.io/twplatformlabs/circleci-base-image:alpine-latest
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
@@ -20,13 +8,11 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN sudo apk add --no-cache \
              python3\
              python3-dev \
+             py3-pip \
              nodejs-current \
              npm \
-             libffi-dev  && \
-    sudo rm /usr/lib/python3.12/EXTERNALLY-MANAGED && \
-    sudo python3 -m ensurepip && \
-    sudo rm -r /usr/lib/python*/ensurepip && \
-    sudo pip3 install --upgrade pip && \
+             libffi-dev && \
+    sudo rm /usr/lib/python*/EXTERNALLY-MANAGED && \
     if [ ! -e /usr/bin/pip ]; then sudo ln -s /usr/bin/pip3 /usr/bin/pip ; fi && \
     sudo ln -s /usr/bin/pydoc3 /usr/bin/pydoc && \
     sudo pip install \
@@ -41,19 +27,25 @@ RUN sudo apk add --no-cache \
          pylint \
          pytest \
          pytest-cov \
+         pytest-asyncio \
+         pytest-env \
          coverage \
          invoke \
          requests \
+         mock \
+         black \
+         bandit \
          jinja2 && \
     sudo npm install -g \
              snyk \
              bats && \
-    download_url=$(curl -s "https://api.github.com/repos/hadolint/hadolint/releases/latest" | jq -r ".assets[] | select(.name == \"hadolint-Linux-x86_64\") | .browser_download_url") && \
-    curl -LO "${download_url}" && \
-    chmod +x hadolint-Linux-x86_64 && sudo mv hadolint-Linux-x86_64 /usr/local/bin/hadolint && \
+    download_url=$(curl -s "https://api.github.com/repos/hadolint/hadolint/releases/latest" | jq -r ".assets[] | select(.name == \"hadolint-linux-x86_64\") | .browser_download_url") && \
+    curl -LO "${download_url}" && \     
+    chmod +x hadolint-linux-x86_64 && sudo mv hadolint-linux-x86_64 /usr/local/bin/hadolint && \
     download_url=$(curl -s "https://api.github.com/repos/sigstore/cosign/releases/latest" | jq -r ".assets[] | select(.name == \"cosign-linux-amd64\") | .browser_download_url") && \
     curl -LO "${download_url}" && \
     chmod +x cosign-linux-amd64 && sudo mv cosign-linux-amd64 /usr/local/bin/cosign && \
+    curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin && \
     curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin && \
     contains_url=$(curl -s "https://api.github.com/repos/oras-project/oras/releases/latest" | jq -r ".assets[] | select(.name | contains(\"_linux_amd64.tar.gz.asc\")) | .browser_download_url") && \
     download_url="${contains_url::-4}" && curl -L -o oras.tar.gz "${download_url}" && \
@@ -64,6 +56,12 @@ RUN sudo apk add --no-cache \
     current_version=$(curl -s "https://api.github.com/repos/google/go-containerregistry/releases/latest" | jq -r '.tag_name') && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/${current_version}/go-containerregistry_Linux_x86_64.tar.gz" > go-containerregistry.tar.gz && \
     sudo bash -c "tar -zxvf go-containerregistry.tar.gz -C /usr/local/bin/ crane" && \
-    rm go-containerregistry.tar.gz
+    rm go-containerregistry.tar.gz && \
+    download_version=$(curl -s "https://api.github.com/repos/docker/scout-cli/releases/latest" | jq -r .tag_name) && \
+    download_url="https://github.com/docker/scout-cli/releases/download/${download_version}/docker-scout_${download_version:1}_linux_amd64.tar.gz" && \
+    curl -fL -O "${download_url}" && \
+    tar -xzf "docker-scout_${download_version:1}_linux_amd64.tar.gz" docker-scout && rm "docker-scout_${download_version:1}_linux_amd64.tar.gz" && \
+    sudo mkdir -p "$HOME/.docker/cli-plugins" && sudo mv docker-scout "$HOME/.docker/cli-plugins/docker-scout" && \
+    sudo chown -R circleci:circleci "$HOME/.docker"
 
 USER circleci
