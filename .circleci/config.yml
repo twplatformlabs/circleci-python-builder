@@ -2,13 +2,15 @@
 version: 2.1
 
 orbs:
-  executor-tools: twdps/executor-tools@5.0.0
+  executor-tools: twdps/executor-tools@6.0.1
   op: twdps/onepassword@3.0.0
-  do: twdps/pipeline-events@5.2.0
+  do: twdps/pipeline-events@5.3.2
 
 globals:
   - &context platform
   - &shell op run --env-file op.env -- /bin/bash -eo pipefail
+  - &registry ghcr.io
+  - &executor-name ghcr.io/twplatformlabs/circleci-executor-builder:alpine-latest
 
 on-push-main: &on-push-main
   branches:
@@ -30,9 +32,8 @@ on-tag-main: &on-tag-main
 
 commands:
 
-  set-environment:
+  set-signing-keys:
     steps:
-      - op/env
       - op/write-to-file:
           op-value: platform/svc-cosign-private-key/notesPlain
           out-file: cosign.key
@@ -40,68 +41,60 @@ commands:
           op-value: platform/svc-cosign-public-key/notesPlain
           out-file: cosign.pub
 
+  release-notes:
+    steps:
+      - do/gh-buildx-image-release-notes:
+          notes-from-file: release.md
+          include-commit-msg: true
+          include-sbom-guidance: true
+          guidance-path: test/package_versions.sh
+          verify-tag: true
+      - run:
+          name: include build logs in release assets
+          command: |
+            mv workspace/docker-bake.json.executors.build.out build.log && gh release upload $CIRCLE_TAG build.log
+            mv workspace/scout.out cve-scan.log && gh release upload $CIRCLE_TAG cve-scan.log
+      - do/slack-bot:
+          channel: lab-events
+          message: "new release circleci-python-builder"
+          include-link: true
+          include-tag: true
+
 workflows:
 
   build and publish:
     jobs:
-      - executor-tools/dev-release:
-          name: image build
+      - executor-tools/dev-buildx:
+          name: development build
           context: *context
           shell: *shell
-          image: twdps/circleci-python-builder
-          tag: edge
-          snyk-scan: true
-          snyk-severity-threshold: high
-          snyk-skip-base-image: true
-          snyk-organization: twplatformlabs
+          executor-image-name: *executor-name
+          registry: *registry
+          registry-login: GHCR_LOGIN
+          registry-password: GHCR_PASSWORD
+          scout-scan: true
           bats-test: true
-          bats-entry-point: /bin/ash
+          bats-entry-point: /bin/bash
           bats-test-path: test/circleci_python_builder.bats
-          opencontainer-labels: true
-          security-scan-nofail: true
-          after-checkout:
-            - op/env
           filters: *on-each-run
 
-      - executor-tools/publish:
-          name: release
+      - executor-tools/releasex:
+          name: Publish release version
           context: *context
           shell: *shell
-          image: twdps/circleci-python-builder
-          pull-tag: edge
-          release-tag: stable
+          executor-image-name: *executor-name
+          registry: *registry
+          registry-login: GHCR_LOGIN
+          registry-password: GHCR_PASSWORD
+          include-latest: "true"
           sign-image: true
-          sbom: true
           after-checkout:
-            - set-environment
+            - set-signing-keys
+          after-publish:
+            - release-notes
           requires:
-            - image build
+            - development build
           filters: *on-tag-main
-
-      - do/gh-release:
-          name: generate release notes
-          shell: *shell
-          context: *context
-          notes-from-file: release.md
-          include-commit-msg: true
-          upload-artifacts: true
-          artifact-folder: workspace
-          before-release:
-            - set-environment
-          requires:
-            - release
-          filters: *on-tag-main
-
-      - do/slack:
-          context: *context
-          channel: lab-events
-          message: "New twdps/circleci-base-image release"
-          include-tag: true
-          filters: *on-tag-main
-          before-message:
-            - op/env
-          requires:
-            - release
 
   monthly build:
     when:
