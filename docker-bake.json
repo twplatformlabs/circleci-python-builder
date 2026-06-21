@@ -3,13 +3,12 @@
     "CREATED": { "default": "" },
     "REVISION": { "default": "" },
     "ALPINE_BASE": { "default": "" },
-    "UBUNTU_BASE": { "default": "" },
     "TAG": { "default": "" }
   },
 
   "group": {
     "executors": {
-      "targets": ["alpine", "ubuntu"]
+      "targets": ["alpine"]
     }
   },
   "target": {
@@ -32,10 +31,10 @@
       ]
     },
     "alpine": {
-      "dockerfile": "Dockerfile.alpine",
-      "tags": ["ghcr.io/twplatformlabs/circleci-python-builder:alpine-${TAG}"],
+      "dockerfile": "Dockerfile",
+      "tags": ["ghcr.io/twplatformlabs/circleci-python-builder:${TAG}"],
       "context": ".",
-      "platforms": ["linux/amd64"],
+      "platforms": ["linux/amd64", "linux/arm64"],
       "inherits": ["_release"],
       "labels": {
         "org.opencontainers.image.url": "https://github.com/twplatformlabs/circleci-python-builder",
@@ -44,21 +43,6 @@
         "org.opencontainers.image.title": "circleci-python-builder",
         "org.opencontainers.image.description": "Alpine-based CircleCI executor image for Python build pipeline",
         "org.opencontainers.image.base.name": "${ALPINE_BASE}"
-      }
-    },
-    "ubuntu": {
-      "dockerfile": "Dockerfile.ubuntu",
-      "tags": ["ghcr.io/twplatformlabs/circleci-python-builder:ubuntu-${TAG}"],
-      "context": ".",
-      "platforms": ["linux/amd64"],
-      "inherits": ["_release"],
-      "labels": {
-        "org.opencontainers.image.url": "https://github.com/twplatformlabs/circleci-python-builder",
-        "org.opencontainers.image.documentation": "https://github.com/twplatformlabs/circleci-python-builder",
-        "org.opencontainers.image.source": "https://github.com/twplatformlabs/circleci-python-builder",
-        "org.opencontainers.image.title": "circleci-python-builder",
-        "org.opencontainers.image.description": "Ubuntu-based CircleCI executor image for Python build pipeline",
-        "org.opencontainers.image.base.name": "${UBUNTU_BASE}"
       }
     }
   }
