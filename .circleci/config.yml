@@ -72,6 +72,7 @@ workflows:
           registry: *registry
           registry-login: GHCR_LOGIN
           registry-password: GHCR_PASSWORD
+          dockerfiles-path: Dockerfile
           scout-scan: true
           bats-test: true
           bats-entry-point: /bin/bash
