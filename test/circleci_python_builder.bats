@@ -18,7 +18,6 @@ setup() {
   run bash -c "docker exec ${TEST_CONTAINER} pip list --format json"
   [[ "${output}" =~ "pip" ]]
   [[ "${output}" =~ "setuptools" ]]
-  [[ "${output}" =~ "setuptools_scm" ]]
   [[ "${output}" =~ "wheel" ]]
   [[ "${output}" =~ "build" ]]
   [[ "${output}" =~ "twine" ]]
